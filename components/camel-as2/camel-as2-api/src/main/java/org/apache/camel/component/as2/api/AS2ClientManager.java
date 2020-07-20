@@ -167,6 +167,12 @@ public class AS2ClientManager {
     public static final String DISPOSITION_NOTIFICATION_TO = CAMEL_AS2_CLIENT_PREFIX + "disposition-notification-to";
 
     /**
+     * The HTTP Context Attribute containing the return URL
+     * sending system requesting an asynchronous message disposition notification.
+     */
+    public static final String RECEIPT_DELIVERY_OPTION = CAMEL_AS2_CLIENT_PREFIX + "receipt-delivery-option";
+
+    /**
      * The HTTP Context Attribute containing the list of names of the requested MIC algorithms to be used
      * by the receiving system to construct a message disposition notification.
      */
@@ -199,6 +205,7 @@ public class AS2ClientManager {
      * @param signingPrivateKey - the private key used to sign EDI message
      * @param compressionAlgorithm - the algorithm used to compress the message or <code>null</code> if sending EDI message uncompressed
      * @param dispositionNotificationTo - an RFC2822 address to request a receipt or <code>null</code> if no receipt requested
+     * @param receiptDeliveryOption - a return URL to request an asynchronous receipt or <code>null</code> if no receipt requested
      * @param signedReceiptMicAlgorithms - the senders list of signing algorithms for signing receipt, in preferred order,  or <code>null</code> if requesting an unsigned receipt.
      * @param encryptingAlgorithm - the algorithm used to encrypt the message or <code>null</code> if sending EDI message unencrypted
      * @param encryptingCertificateChain - the chain of certificates used to encrypt the message or <code>null</code> if sending EDI message unencrypted
@@ -219,6 +226,7 @@ public class AS2ClientManager {
                                 PrivateKey signingPrivateKey,
                                 AS2CompressionAlgorithm compressionAlgorithm,
                                 String dispositionNotificationTo,
+                                String receiptDeliveryOption,
                                 String[] signedReceiptMicAlgorithms,
                                 AS2EncryptionAlgorithm encryptingAlgorithm,
                                 Certificate[] encryptingCertificateChain)
@@ -248,6 +256,7 @@ public class AS2ClientManager {
         httpContext.setAttribute(AS2ClientManager.SIGNING_PRIVATE_KEY, signingPrivateKey);
         httpContext.setAttribute(AS2ClientManager.COMPRESSION_ALGORITHM, compressionAlgorithm);
         httpContext.setAttribute(AS2ClientManager.DISPOSITION_NOTIFICATION_TO, dispositionNotificationTo);
+        httpContext.setAttribute(AS2ClientManager.RECEIPT_DELIVERY_OPTION, receiptDeliveryOption);
         httpContext.setAttribute(AS2ClientManager.SIGNED_RECEIPT_MIC_ALGORITHMS, signedReceiptMicAlgorithms);
         httpContext.setAttribute(AS2ClientManager.ENCRYPTING_ALGORITHM, encryptingAlgorithm);
         httpContext.setAttribute(AS2ClientManager.ENCRYPTING_CERTIFICATE_CHAIN, encryptingCertificateChain);

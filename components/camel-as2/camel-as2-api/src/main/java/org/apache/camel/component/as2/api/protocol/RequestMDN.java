@@ -55,6 +55,12 @@ public class RequestMDN implements HttpRequestInterceptor {
 
                 request.addHeader(AS2Header.DISPOSITION_NOTIFICATION_OPTIONS, options.toString());
             }
+
+            // add code for asynchronous mdn
+            String receiptDeliveryOption = coreContext.getAttribute(AS2ClientManager.RECEIPT_DELIVERY_OPTION, String.class);
+            if (receiptDeliveryOption != null ) {
+                request.addHeader(AS2Header.RECEIPT_DELIVERY_OPTION, receiptDeliveryOption);
+            }
         }
 
     }

@@ -55,6 +55,8 @@ public class AS2ClientManagerEndpointConfigurationConfigurer extends org.apache.
         case "MdnMessageTemplate": target.setMdnMessageTemplate(property(camelContext, java.lang.String.class, value)); return true;
         case "methodname":
         case "MethodName": target.setMethodName(property(camelContext, java.lang.String.class, value)); return true;
+        case "receiptdeliveryoption":
+        case "ReceiptDeliveryOption": target.setReceiptDeliveryOption(property(camelContext, java.lang.String.class, value)); return true;
         case "requesturi":
         case "RequestUri": target.setRequestUri(property(camelContext, java.lang.String.class, value)); return true;
         case "server":
@@ -104,6 +106,7 @@ public class AS2ClientManagerEndpointConfigurationConfigurer extends org.apache.
         answer.put("From", java.lang.String.class);
         answer.put("MdnMessageTemplate", java.lang.String.class);
         answer.put("MethodName", java.lang.String.class);
+        answer.put("ReceiptDeliveryOption", java.lang.String.class);
         answer.put("RequestUri", java.lang.String.class);
         answer.put("Server", java.lang.String.class);
         answer.put("ServerFqdn", java.lang.String.class);
@@ -159,6 +162,8 @@ public class AS2ClientManagerEndpointConfigurationConfigurer extends org.apache.
         case "MdnMessageTemplate": return target.getMdnMessageTemplate();
         case "methodname":
         case "MethodName": return target.getMethodName();
+        case "receiptdeliveryoption":
+        case "ReceiptDeliveryOption": return target.getReceiptDeliveryOption();
         case "requesturi":
         case "RequestUri": return target.getRequestUri();
         case "server":

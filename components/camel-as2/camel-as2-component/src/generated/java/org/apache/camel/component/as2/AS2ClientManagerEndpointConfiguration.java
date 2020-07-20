@@ -49,6 +49,9 @@ public final class AS2ClientManagerEndpointConfiguration extends AS2Configuratio
     private String from;
 
     @UriParam
+    private String receiptDeliveryOption;
+
+    @UriParam
     private String requestUri;
 
     @UriParam
@@ -152,6 +155,14 @@ public final class AS2ClientManagerEndpointConfiguration extends AS2Configuratio
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    public String getReceiptDeliveryOption() {
+        return receiptDeliveryOption;
+    }
+
+    public void setReceiptDeliveryOption(String receiptDeliveryOption) {
+        this.receiptDeliveryOption = receiptDeliveryOption;
     }
 
     public String getRequestUri() {

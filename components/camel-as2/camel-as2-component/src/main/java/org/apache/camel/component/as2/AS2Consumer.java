@@ -23,6 +23,8 @@ import java.util.Set;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.camel.component.as2.api.AS2Header;
+import org.apache.camel.component.as2.api.AS2MimeType;
 import org.apache.camel.component.as2.api.AS2ServerConnection;
 import org.apache.camel.component.as2.api.AS2ServerManager;
 import org.apache.camel.component.as2.api.entity.ApplicationEDIEntity;
@@ -38,6 +40,7 @@ import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
+import org.apache.http.entity.ContentType;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.HttpCoreContext;
 import org.apache.http.protocol.HttpRequestHandler;
@@ -109,6 +112,7 @@ public class AS2Consumer extends AbstractApiConsumer<AS2ApiName, AS2Configuratio
             throws HttpException, IOException {
         Exception exception = null;
         try {
+            
             if (request instanceof HttpEntityEnclosingRequest) {
                 EntityParser.parseAS2MessageEntity(request);
                 // TODO derive last to parameters from configuration.
@@ -116,12 +120,21 @@ public class AS2Consumer extends AbstractApiConsumer<AS2ApiName, AS2Configuratio
             }
             
             ApplicationEDIEntity ediEntity = HttpMessageUtils.extractEdiPayload(request, as2ServerConnection.getDecryptingPrivateKey());
-            
             // Set AS2 Interchange property and EDI message into body of input message.
             Exchange exchange = getEndpoint().createExchange();
             HttpCoreContext coreContext = HttpCoreContext.adapt(context);
             exchange.setProperty(AS2Constants.AS2_INTERCHANGE, coreContext);
-            exchange.getIn().setBody(ediEntity.getEdiMessage());
+
+            String contentTypeString = HttpMessageUtils.getHeaderValue(request, AS2Header.CONTENT_TYPE);
+            ContentType contentType = ContentType.parse(contentTypeString);
+            if (contentType.getMimeType().toLowerCase().equals(AS2MimeType.MULTIPART_REPORT)) {                
+                exchange.getIn().setBody(((HttpEntityEnclosingRequest)request).getEntity());
+            }
+            
+
+            if (ediEntity != null) {
+                exchange.getIn().setBody(ediEntity.getEdiMessage());                
+            }            
 
             try {
                 // send message to next processor in the route

@@ -471,6 +471,7 @@ public final class EntityParser {
                 }
             } catch (HttpException e) {
                 throw e;
+            } catch (IllegalArgumentException e) {                
             } catch (Exception e) {
                 throw new HttpException("Failed to parse entity content", e);
             }

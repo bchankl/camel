@@ -22,11 +22,15 @@ interface Constants {
 
     String MD5_AS2_ALGORITHM_NAME = "md5";
     String MD5_JDK_ALGORITHM_NAME = "MD5";
+
+    String SHA_256_AS2_ALGORITHM_NAME = "sha256";
+    String SHA_256_JDK_ALGORITHM_NAME = "SHA-256";
 }
 
 public enum AS2MicAlgorithm {
     SHA_1(Constants.SHA_1_JDK_ALGORITHM_NAME, Constants.SHA_1_AS2_ALGORITHM_NAME),
-    MD5(Constants.MD5_JDK_ALGORITHM_NAME, Constants.MD5_AS2_ALGORITHM_NAME);
+    MD5(Constants.MD5_JDK_ALGORITHM_NAME, Constants.MD5_AS2_ALGORITHM_NAME),
+    SHA_256(Constants.SHA_256_JDK_ALGORITHM_NAME, Constants.SHA_256_AS2_ALGORITHM_NAME);
 
     private String jdkAlgorithmName;
     private String as2AlgorithmName;
@@ -50,6 +54,8 @@ public enum AS2MicAlgorithm {
                 return Constants.SHA_1_JDK_ALGORITHM_NAME;
             case Constants.MD5_AS2_ALGORITHM_NAME:
                 return Constants.MD5_JDK_ALGORITHM_NAME;
+            case Constants.SHA_256_AS2_ALGORITHM_NAME:
+                return Constants.SHA_256_JDK_ALGORITHM_NAME;
             default:
                 return null;
         }
@@ -61,6 +67,8 @@ public enum AS2MicAlgorithm {
                 return Constants.MD5_AS2_ALGORITHM_NAME;
             case Constants.SHA_1_JDK_ALGORITHM_NAME:
                 return Constants.SHA_1_AS2_ALGORITHM_NAME;
+            case Constants.SHA_256_JDK_ALGORITHM_NAME:
+                return Constants.SHA_256_AS2_ALGORITHM_NAME;
             default:
                 return null;
         }
